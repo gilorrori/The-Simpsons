@@ -3,8 +3,9 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-
+    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.secrets)
+    alias(libs.plugins.devtools.ksp)
 }
 
 secrets {
@@ -28,8 +29,8 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+       getByName("release") {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -37,13 +38,18 @@ android {
         }
 
         getByName("debug") {
-
+            isMinifyEnabled = false
         }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    buildFeatures{
+        viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -56,4 +62,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.runner)
+    ksp(libs.hilt.android.compiler)
 }

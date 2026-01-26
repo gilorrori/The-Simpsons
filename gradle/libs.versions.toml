@@ -8,7 +8,9 @@ appcompat = "1.7.1"
 material = "1.13.0"
 activity = "1.12.2"
 constraintlayout = "2.2.1"
-
+hiltAndroidCompiler = "2.59"
+runner = "1.7.0"
+ksp = "2.3.4"
 secrets = "2.0.1"
 
 [libraries]
@@ -21,9 +23,18 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
+# Dagger Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidCompiler" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+#Hilt
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidCompiler" }
 #Secrets
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+#KSP
+devtools-ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
 

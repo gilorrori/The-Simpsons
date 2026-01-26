@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.secrets)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.safe.args)
 }
 
 secrets {
@@ -67,4 +68,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.runner)
     ksp(libs.hilt.android.compiler)
+
+    //NavComponent
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 }

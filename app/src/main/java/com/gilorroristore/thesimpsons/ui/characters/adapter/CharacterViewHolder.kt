@@ -3,6 +3,7 @@ package com.gilorroristore.thesimpsons.ui.characters.adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gilorroristore.thesimpsons.BuildConfig
+import com.gilorroristore.thesimpsons.R
 import com.gilorroristore.thesimpsons.databinding.ItemCharacterBinding
 import com.gilorroristore.thesimpsons.domain.model.CharacterDetailModel
 
@@ -17,6 +18,7 @@ class CharacterViewHolder(
 
         Glide.with(context).load(base + characterDetail.portraitPath).into(binding.ivCharacter)
         binding.tvCharacterName.text = characterDetail.name
+        binding.tvOccupation.text = context.getString(R.string.character_occupation, characterDetail.occupation)
 
         binding.root.setOnClickListener {
             onItemSelected(characterDetail.id)

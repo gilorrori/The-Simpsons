@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gilorroristore.thesimpsons.databinding.FragmentCharactersBinding
@@ -31,12 +32,13 @@ class CharactersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
+        initUi()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUi()
+
     }
 
     private fun initUi() {
@@ -47,7 +49,7 @@ class CharactersFragment : Fragment() {
 
     private fun getAllCharacters() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
                 charactersViewModel.state.collect {
                     evaluateState(it)
                 }
@@ -77,7 +79,7 @@ class CharactersFragment : Fragment() {
 
         binding.rvCharacters.adapter = characterAdapter
 
-        //loadNextPage(charactersModel.next ?: "", charactersModel.pages)
+        loadNextPage(charactersModel.next ?: "", charactersModel.pages)
     }
 
     private fun errorState(error: String) {
@@ -86,6 +88,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun navToDetail(id: Int) {
+        findNavController().navigate(CharactersFragmentDirections.actionCharactersFragmentToDetailCharacterFragment(id))
         Toast.makeText(requireActivity(), "el id es $id", Toast.LENGTH_SHORT).show()
     }
 
@@ -111,10 +114,8 @@ class CharactersFragment : Fragment() {
 
                 if (isAtEnd) {
                     charactersViewModel.loadNextPage(page.toInt())
-                    Toast.makeText(requireActivity(), "page $page", Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
-
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gilorroristore.thesimpsons.data.repositories.CharacterRepositoryImpl
 import com.gilorroristore.thesimpsons.domain.model.CharacterDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ class CharactersViewModel @Inject constructor(private val characterRepositoryImp
     fun getAllCharacters() {
         _state.value = CharactersState.Loading
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = characterRepositoryImpl.getAllCharacters()
 
             if (response != null) {

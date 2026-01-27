@@ -24,6 +24,7 @@ data class CharacterDetailResponse(
     @SerializedName("birthdate") val birthdate: String?,
     @SerializedName("gender") val gender: String?,
     @SerializedName("name") val name: String?,
+    @SerializedName("occupation") val occupation: String?,
     @SerializedName("portrait_path") val portraitPath: String?,
     @SerializedName("phrases") val phrases: List<String>?,
     @SerializedName("status") val status: String?,
@@ -36,6 +37,7 @@ fun CharacterDetailResponse.toDomain(): CharacterDetailModel {
         birthdate = birthdate ?: "",
         gender = gender ?: "",
         name = name ?: "",
+        occupation = occupation ?: "",
         portraitPath = portraitPath ?: "",
         phrases = phrases ?: emptyList(),
         status = status ?: ""

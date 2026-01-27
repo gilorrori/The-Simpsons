@@ -64,6 +64,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.interceptor)
+
     //Hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.runner)
@@ -72,4 +77,9 @@ dependencies {
     //NavComponent
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+
+
+    // Glide
+    implementation(libs.glide)
+    implementation (libs.compiler)
 }

@@ -1,4 +1,4 @@
-package com.gilorroristore.thesimpsons.di
+package com.gilorroristore.thesimpsons.di.modules
 
 import com.gilorroristore.thesimpsons.BuildConfig
 import com.gilorroristore.thesimpsons.data.network.SimpsonsApiService

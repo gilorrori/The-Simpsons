@@ -12,33 +12,32 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gilorroristore.thesimpsons.databinding.FragmentCharactersBinding
 import com.gilorroristore.thesimpsons.domain.model.CharactersModel
 import com.gilorroristore.thesimpsons.ui.characters.adapter.CharacterAdapter
+import com.gilorroristore.thesimpsons.ui.core.helper.EndlessScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-    private lateinit var _binding: FragmentCharactersBinding
-    private val binding get() = _binding
+    private var _binding: FragmentCharactersBinding? = null
+    private val binding get() = _binding!!
     private val charactersViewModel by viewModels<CharactersViewModel>()
     private lateinit var characterAdapter: CharacterAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
-        initUi()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initUi()
     }
 
     private fun initUi() {
@@ -49,37 +48,37 @@ class CharactersFragment : Fragment() {
 
     private fun getAllCharacters() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED){
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 charactersViewModel.state.collect {
                     evaluateState(it)
                 }
             }
         }
-    }
 
-    private fun evaluateState(response: CharactersState){
-        when(response) {
+    }
+    private fun evaluateState(response: CharactersState) {
+        when (response) {
             CharactersState.Loading -> loadingState()
             is CharactersState.Success -> successState(response.charactersModel)
             is CharactersState.Error -> errorState(response.error)
+            is CharactersState.SuccessNewList -> {}
+            CharactersState.None -> {}
         }
     }
 
-
-    private fun loadingState(){
+    private fun loadingState() {
         binding.pbCharacter.isVisible = true
     }
 
     private fun successState(charactersModel: CharactersModel) {
         binding.pbCharacter.isVisible = false
-        characterAdapter = CharacterAdapter (charactersModel.results.toMutableList()){
+        characterAdapter = CharacterAdapter(charactersModel.results) {
             navToDetail(it)
         }
 
-
         binding.rvCharacters.adapter = characterAdapter
 
-        loadNextPage(charactersModel.next ?: "", charactersModel.pages)
+        //loadNextPage(charactersModel.next ?: "", charactersModel.pages)
     }
 
     private fun errorState(error: String) {
@@ -87,9 +86,13 @@ class CharactersFragment : Fragment() {
         Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show()
     }
 
+
     private fun navToDetail(id: Int) {
-        findNavController().navigate(CharactersFragmentDirections.actionCharactersFragmentToDetailCharacterFragment(id))
-        Toast.makeText(requireActivity(), "el id es $id", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(
+            CharactersFragmentDirections.actionCharactersFragmentToDetailCharacterFragment(
+                id
+            )
+        )
     }
 
     /**
@@ -97,24 +100,11 @@ class CharactersFragment : Fragment() {
      */
     private fun loadNextPage(next: String, totalPages: Int) {
         val page = next.substring(47, next.length)
-
         if (page.toInt() >= totalPages) return
 
-        binding.rvCharacters.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-
-                val isAtEnd = visibleItemCount + firstVisibleItem >= totalItemCount &&
-                            firstVisibleItem >= 0
-
-                if (isAtEnd) {
-                    charactersViewModel.loadNextPage(page.toInt())
-                }
+        binding.rvCharacters.addOnScrollListener(object : EndlessScrollListener(page.toInt() - 1) {
+            override fun onLoadMore(loadNewPage: Int) {
+               // llamar a la nueva pagina
             }
         })
     }

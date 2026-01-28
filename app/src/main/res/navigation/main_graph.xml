@@ -24,4 +24,9 @@
             android:name="idCharacter"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/episodesFragment"
+        android:name="com.gilorroristore.thesimpsons.ui.episodies.EpisodesFragment"
+        android:label="fragment_episodes"
+        tools:layout="@layout/fragment_episodes" />
 </navigation>

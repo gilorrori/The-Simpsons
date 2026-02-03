@@ -29,4 +29,9 @@
         android:name="com.gilorroristore.thesimpsons.ui.episodies.EpisodesFragment"
         android:label="fragment_episodes"
         tools:layout="@layout/fragment_episodes" />
+    <fragment
+        android:id="@+id/locationsFragment"
+        android:name="com.gilorroristore.thesimpsons.ui.location.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations" />
 </navigation>

@@ -12,7 +12,7 @@
         android:title="@string/episodes_title" />
 
     <item
-        android:id="@+id/locationFragment"
+        android:id="@+id/locationsFragment"
         android:icon="@drawable/ic_lisa"
         android:title="@string/locations_title" />
 

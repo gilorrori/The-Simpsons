@@ -5,11 +5,20 @@
 
     <string name="character_occupation">Ocupación: %1$s</string>
 
-    <string name="home_title">Inicio</string>
+    <string name="generic_back">Regresar</string>
+    <string name="generic_alive">Vivo</string>
+    <string name="generic_deceased">Muerto</string>
 
+
+    <!-- Home -->
+    <string name="character_status">Estatus del personaje</string>
+
+
+
+    <!-- Navigation -->
+    <string name="home_title">Inicio</string>
     <string name="characters_title">Personajes</string>
     <string name="episodes_title">Episodios</string>
     <string name="locations_title">Ubicaciones</string>
-
 
 </resources>

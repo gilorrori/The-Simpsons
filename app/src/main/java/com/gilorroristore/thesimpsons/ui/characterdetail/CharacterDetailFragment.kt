@@ -19,12 +19,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment() {
-
     private val characterDetailViewModel by viewModels<CharacterDetailViewModel>()
     private val args: CharacterDetailFragmentArgs by navArgs()
     private lateinit var _binding: FragmentDetailCharacterBinding
     private val binding get() = _binding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +40,8 @@ class CharacterDetailFragment : Fragment() {
     private fun initUI() {
         characterDetailViewModel.getDetailCharacter(args.idCharacter)
         getCharacterDetail()
+
+        binding.ivBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
     }
 
     private fun getCharacterDetail() {
@@ -73,5 +73,4 @@ class CharacterDetailFragment : Fragment() {
     private fun errorState(error: String) {
         binding.pbCharacter.isVisible = false
     }
-
 }

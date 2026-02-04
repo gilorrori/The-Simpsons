@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +8,56 @@
     android:orientation="vertical"
     tools:context=".ui.characters.CharactersFragment">
 
+    <LinearLayout
+        android:id="@+id/llContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/rvCharacters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvStatusCharacter"
+            style="@style/MiniTextStyle"
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/character_status"
+            android:textColor="@color/text_color_black_contrasted"
+            app:layout_constraintEnd_toStartOf="@+id/tvAlive" />
+
+        <TextView
+            android:id="@+id/tvAlive"
+            style="@style/MiniTextStyle"
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/generic_alive"
+            android:textColor="@color/text_color_black_contrasted"
+            app:drawableStartCompat="@drawable/circle"
+            app:drawableTint="@color/alive_character_color"
+            app:layout_constraintEnd_toStartOf="@+id/tvDead" />
+
+        <TextView
+            android:id="@+id/tvDead"
+            style="@style/MiniTextStyle"
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/generic_deceased"
+            android:textColor="@color/text_color_black_contrasted"
+            app:drawableStartCompat="@drawable/circle"
+            app:drawableTint="@color/dead_character_color"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCharacters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llContainer"
         tools:itemCount="4"
         tools:listitem="@layout/item_character" />
 
@@ -22,6 +66,10 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

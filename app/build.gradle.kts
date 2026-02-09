@@ -89,4 +89,8 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie)
+
+    //Room
+    implementation(libs.androidx.room.ktx)
+    ksp (libs.androidx.room.compiler)
 }
